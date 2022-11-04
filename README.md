@@ -1,1 +1,1 @@
-# CS4750-studentdebt
+Databases Student Debt Tracker Project
