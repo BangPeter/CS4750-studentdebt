@@ -24,7 +24,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
   {
       deletePerson($_POST['person_to_delete']);
       $list_of_persons = getAllPersons();
-      print('test');
   }
 
   if(!empty($_POST['btnAction']) && $_POST['btnAction'] == 'Confirm update')
