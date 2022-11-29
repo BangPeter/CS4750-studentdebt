@@ -5,11 +5,11 @@
 function getPersonByName($personName)
 {
     global $db;
-    $query = "SELECT * FROM person where personName = :personName";
+    $query = "SELECT * FROM person WHERE personName like '%$personName%'";
     $statement = $db->prepare($query);
     $statement->bindValue(":personName", $personName);
     $statement->execute();
-    $result = $statement->fetch();
+    $result = $statement->fetchAll();
     $statement->closeCursor();
     return $result;
 }
@@ -56,6 +56,22 @@ function updatePerson($personId, $personName, $loan_amount)
     // 2) bindValue, execute
     global $db;
     $query = "UPDATE person SET personName=:personName, loan_amount=:loan_amount WHERE personId=:personId";
+    $statement = $db->prepare($query);
+    $statement->bindValue(":personName", $personName);
+    $statement->bindValue(":loan_amount", $loan_amount);
+    $statement->bindValue(":personId", $personId);
+    $statement->execute();
+    $statement->closeCursor();
+}
+
+function updateDisability($disId, $date)
+{   
+    // get instance of PDO
+    // prepare statement
+    // 1) prepare
+    // 2) bindValue, execute
+    global $db;
+    $query = "UPDATE Disability SET disId=:personName, loan_amount=:loan_amount WHERE personId=:personId";
     $statement = $db->prepare($query);
     $statement->bindValue(":personName", $personName);
     $statement->bindValue(":loan_amount", $loan_amount);

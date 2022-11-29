@@ -31,6 +31,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
     updatePerson($_POST['personId'], $_POST['personName'], $_POST['loan_amount']);
     $list_of_persons = getAllPersons();
   }
+  if(!empty($_POST['btnAction']) && $_POST['btnAction'] == 'search')
+  {
+    $list_of_persons = getPersonByName($_POST['searchname']);
+  }
 }
 ?>
 
@@ -45,32 +49,68 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
   <link rel="icon" type="image/png" href="http://www.cs.virginia.edu/~up3f/cs4750/images/db-icon.png" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+* {box-sizing: border-box;}
+
+body {
+  margin: 0;
+}
+
+.search-container input[type=text] {
+  padding: 3.3px;
+  margin-top: 8px;
+  font-size: 17px;
+  border-color:black;
+  border-width:2px;
+  width: 50%;
+}
+
+.search-container button {
+  padding: 8px 10px;
+  margin-top: 10px;
+  margin-right: 16px;
+  background: #ddd;
+  font-size: 17px;
+  cursor: pointer;
+  border-color:black;
+  border-width:2px;
+}
+
+.nav-item {
+  margin-top: 1px;
+  font-size: 16px;
+}
+
+</style>
 </head>
 
 <body>
   <?php include('header.html') ?> 
-  
+
+  <?php //if htmlspecialchars($_SESSION["permission_level"]) == "admin" : ?>
+    
 <div class="container">
 
-  <h1>Add Students:</h1>
+  <!--<h1>Add Students:</h1>
 
-<form name="mainForm" action="simpleform.php" method="post">   
+<form name="mainForm" action="simpleform.php" method="post" onsubmit="return confirm('Are you sure you want to submit?');">   
   <div class="row mb-3 mx-3">
     Student's name:
     <input type="text" class="form-control" name="personName" required 
-          value="<?php if ($person_to_update!=null) echo $person_to_update['personName'] ?>"
+          value="<?php //if ($person_to_update!=null) echo $person_to_update['personName'] ?>"
     />            
   </div>  
   <div class="row mb-3 mx-3">
     Loan Amount:
     <input type="text" class="form-control" name="loan_amount" required 
-    value="<?php if ($person_to_update!=null) echo $person_to_update['loan_amount'] ?>"
+    value="<?php //if ($person_to_update!=null) echo $person_to_update['loan_amount'] ?>"
     />            
   </div> 
   <input type="hidden" name="personId"
-    value="<?php if ($person_to_update!=null) echo $person_to_update['personId'] ?>"
+    value="<?php //if ($person_to_update!=null) echo $person_to_update['personId'] ?>"
   />
-  <!-- <div class="row mb-3 mx-3"> -->
+
   <div>
     <input type="submit" value="Add" name="btnAction" class="btn btn-dark" 
            title="Add a student to list of students with debt table." />            
@@ -79,10 +119,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
   </div>  
 
 </form>   
-
+-->
+  <!-- <div class="row mb-3 mx-3"> -->
 <hr/>
 <h3>List of students</h3>
 <div class="row justify-content-center">  
+  <div class="search-container" style="text-align:center">
+                <form action="simpleform.php" method="post">
+                  <input type="text" placeholder="Search.." name="searchname">
+                  <button type="submit" value="search" name="btnAction"><i class="fa fa-search"></i></button>
+                </form>
+                <?php if (empty($list_of_persons)): ?>
+                  <p>No results found!</p>
+                <?php endif; ?>
+  </div>
 <table class="w3-table w3-bordered w3-card-4 center" style="width:70%">
   <thead>
   <tr style="background-color:#B0B0B0">
@@ -99,7 +149,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
      <td><?php echo $student_info['personName']; ?></td>
      <td><?php echo $student_info['loan_amount']; ?></td>                   
      <td>
-        <form action="simpleform.php" method="post">
+        <form action="results.php" method="post">
           <input type="submit" value="Update" name="btnAction" class="btn btn-primary" 
                 title="Click to update this person" />
           <input type="hidden" name="person_to_update" 
@@ -107,7 +157,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
         </form>
      </td>
      <td>
-        <form action="simpleform.php" method="post">
+        <form action="simpleform.php" method="post" onsubmit="return confirm('Are you sure you want to delete?');">
           <input type="submit" value="Delete" name="btnAction" class="btn btn-primary" 
                 title="Click to delete this person" /> 
           <input type="hidden" name="person_to_delete" 
