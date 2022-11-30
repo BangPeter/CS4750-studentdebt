@@ -5,6 +5,8 @@ require("debt-db.php");
 $list_of_persons = getAllPersons();
 $person_to_update = null;      
 $person_to_delete = null;
+$enrollment = null;
+$enlistment = null;
 session_start();
 ?>
 
@@ -29,6 +31,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
   if(!empty($_POST['btnAction']) && $_POST['btnAction'] == 'Confirm update')
   {
     updatePerson($_POST['personId'], $_POST['name'], $_POST['loan_amount']);
+    $enrollment = getEnrollmentByName($_POST['name']);
+    $enlistment = getOrgByName($_POST['name']);
+    if(!empty($enrollment)){
+      updateEnrollment($_POST['name'], $_POST['school'], $_POST['month']);
+    }
+    else{
+      addEnrollment($_POST['name'], $_POST['school'], $_POST['month']);
+    }
+    if(!empty($enlistment)){
+      updateEnlistment($_POST['name'], $_POST['enlist']);
+    }
+    else{
+      addEnlistment($_POST['name'], $_POST['enlist']);
+    }
+    
+    
+    
     $list_of_persons = getAllPersons();
   }
   if(!empty($_POST['btnAction']) && $_POST['btnAction'] == 'search')

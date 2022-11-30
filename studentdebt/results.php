@@ -20,8 +20,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
   if(!empty($_POST['btnAction']) && $_POST['btnAction'] == 'Confirm update')
   {
     updatePerson($_POST['personId'], $_POST['name'], $_POST['loan_amount']);
-    updateEnrollment($_POST['name'], $_POST['school'], $_POST['month']);
-    updateEnlistment($_POST['name'], $_POST['organ']);
     header("location: simpleform.php");
   }
 }
@@ -117,7 +115,7 @@ body {
   </div> 
   <div class="row mb-3 mx-3">
     Enlistment:
-    <input type="text" class="form-control" name="month"
+    <input type="text" class="form-control" name="enlist"
     value="<?php if ($enlistment!=null) echo $enlistment[0]['organ'] ?>"
     <?php if (htmlspecialchars($_SESSION["role"])=="student") echo 'readonly'?>
     />            

@@ -88,6 +88,29 @@ function updatePerson($personId, $name, $loan_amount)
     $statement->closeCursor();
 }
 
+function addEnrollment($name, $school, $month)
+{
+    global $db;
+    $query = "INSERT INTO enrolledin (name, school, month) VALUES (:name, :school, :month)";
+    $statement = $db->prepare($query);
+    $statement->bindValue(":month", $month);
+    $statement->bindValue(":name", $name);
+    $statement->bindValue(":school", $school);
+    $statement->execute();
+    $statement->closeCursor();
+}
+
+function addEnlistment($name, $organ)
+{
+    global $db;
+    $query = "INSERT INTO enlistin (name, organ) VALUES (:name, :organ)";
+    $statement = $db->prepare($query);
+    $statement->bindValue(":name", $name);
+    $statement->bindValue(":organ", $organ);
+    $statement->execute();
+    $statement->closeCursor();
+}
+
 function updateEnrollment($name, $school , $month)
 {   
     // get instance of PDO
