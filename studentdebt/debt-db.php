@@ -48,6 +48,30 @@ function getAllPersons()
     return $result;
 }
 
+function getEnrollmentByName($name)
+{
+    global $db;
+    $query = "SELECT * FROM enrolledin WHERE name=:name";
+    $statement = $db->prepare($query);
+    $statement->bindValue(":name", $name);
+    $statement->execute();
+    $result = $statement->fetchAll();
+    $statement->closeCursor();
+    return $result;
+}
+
+function getOrgByName($name)
+{
+    global $db;
+    $query = "SELECT * FROM enlistin WHERE name=:name";
+    $statement = $db->prepare($query);
+    $statement->bindValue(":name", $name);
+    $statement->execute();
+    $result = $statement->fetchAll();
+    $statement->closeCursor();
+    return $result;
+}
+
 function updatePerson($personId, $name, $loan_amount)
 {   
     // get instance of PDO
@@ -64,18 +88,33 @@ function updatePerson($personId, $name, $loan_amount)
     $statement->closeCursor();
 }
 
-function updateDisability($disId, $date)
+function updateEnrollment($name, $school , $month)
 {   
     // get instance of PDO
     // prepare statement
     // 1) prepare
     // 2) bindValue, execute
     global $db;
-    $query = "UPDATE Disability SET disId=:name, loan_amount=:loan_amount WHERE personId=:personId";
+    $query = "UPDATE enrolledin SET month=:month, school=:school WHERE name=:name";
     $statement = $db->prepare($query);
     $statement->bindValue(":name", $name);
-    $statement->bindValue(":loan_amount", $loan_amount);
-    $statement->bindValue(":personId", $personId);
+    $statement->bindValue(":school", $school);
+    $statement->bindValue(":month", $month);
+    $statement->execute();
+    $statement->closeCursor();
+}
+
+function updateEnlistment($name, $organ)
+{   
+    // get instance of PDO
+    // prepare statement
+    // 1) prepare
+    // 2) bindValue, execute
+    global $db;
+    $query = "UPDATE enlistin SET organ=:organ WHERE name=:name";
+    $statement = $db->prepare($query);
+    $statement->bindValue(":name", $name);
+    $statement->bindValue(":organ", $organ);
     $statement->execute();
     $statement->closeCursor();
 }

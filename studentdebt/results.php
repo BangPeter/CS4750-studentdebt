@@ -3,6 +3,8 @@ require("connect-db.php");      // include("connect-db.php");
 require("debt-db.php");
 
 $person_to_update = null;      
+$enrollment = null;
+$enlistment = null;
 session_start();
 ?>
 
@@ -12,10 +14,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
   if (!empty($_POST['btnAction']) && $_POST['btnAction'] =='Update')
   {
       $person_to_update = getPersonById($_POST['person_to_update']);
+      $enrollment = getEnrollmentByName($_POST['studentname']);
+      $enlistment = getOrgByName($_POST['studentname']);
   }
   if(!empty($_POST['btnAction']) && $_POST['btnAction'] == 'Confirm update')
   {
     updatePerson($_POST['personId'], $_POST['name'], $_POST['loan_amount']);
+    updateEnrollment($_POST['name'], $_POST['school'], $_POST['month']);
+    updateEnlistment($_POST['name'], $_POST['organ']);
     header("location: simpleform.php");
   }
 }
@@ -95,6 +101,27 @@ body {
   <input type="hidden" name="personId"
     value="<?php if ($person_to_update!=null) echo $person_to_update['personId'] ?>"
   />
+  <div class="row mb-3 mx-3">
+    School:
+    <input type="text" class="form-control" name="school"
+    value="<?php if ($enrollment!=null) echo $enrollment[0]['school'] ?>"
+    <?php if (htmlspecialchars($_SESSION["role"])=="student") echo 'readonly'?>
+    />            
+  </div> 
+  <div class="row mb-3 mx-3">
+    Enrollment Month:
+    <input type="text" class="form-control" name="month"
+    value="<?php if ($enrollment!=null) echo $enrollment[0]['month'] ?>"
+    <?php if (htmlspecialchars($_SESSION["role"])=="student") echo 'readonly'?>
+    />            
+  </div> 
+  <div class="row mb-3 mx-3">
+    Enlistment:
+    <input type="text" class="form-control" name="month"
+    value="<?php if ($enlistment!=null) echo $enlistment[0]['organ'] ?>"
+    <?php if (htmlspecialchars($_SESSION["role"])=="student") echo 'readonly'?>
+    />            
+  </div> 
 
   <!-- Every other relevant field in the ER diagram goes here!!!!!!! -->
 

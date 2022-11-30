@@ -156,6 +156,8 @@ body {
                 title="Click to update this person" />
           <input type="hidden" name="person_to_update" 
                 value="<?php echo $student_info['personId']; ?>" />
+          <input type="hidden" name="studentname" 
+                value="<?php echo $student_info['name']; ?>" />
         </form>
      </td>
      <?php if (htmlspecialchars($_SESSION["role"])=="teacher"):?>
