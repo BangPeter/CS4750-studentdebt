@@ -6,10 +6,15 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="collapsibleNavbar">
-          <ul class="navbar-nav ms-auto">  
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="simpleform.php">Home</a>
+            </li>
+            <?php if (htmlspecialchars($_SESSION["role"])=="teacher"):?>
             <li class="nav-item">
               <a class="nav-link" href="addstudent.php">Add Student</a>
-            </li>            
+            </li>
+            <?php endif; ?>            
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="dropdown01" role="button" data-bs-toggle="dropdown" aria-expanded="false"><?php echo htmlspecialchars($_SESSION["username"]); ?> </a>
               <ul class="dropdown-menu" aria-labelledby="dropdown01">

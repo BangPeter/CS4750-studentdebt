@@ -140,7 +140,9 @@ body {
     <th width="30%"><b>Name</b></th>
     <th width="30%"><b>Loan Amount</b></th>
     <th><b>Update?</b></th>
+    <?php if (htmlspecialchars($_SESSION["role"])=="teacher"):?>
     <th><b>Delete?</b></th>
+    <?php endif; ?>   
   </tr>
   </thead>
 <?php foreach ($list_of_persons as $student_info): ?>
@@ -156,14 +158,16 @@ body {
                 value="<?php echo $student_info['personId']; ?>" />
         </form>
      </td>
+     <?php if (htmlspecialchars($_SESSION["role"])=="teacher"):?>
      <td>
-        <form action="simpleform.php" method="post" onsubmit="return confirm('Are you sure you want to delete?');">
+        <form action="simpleform.php" method="post" onsubmit="return confirm('Are you sure you want to delete? This action cannot be undone.');">
           <input type="submit" value="Delete" name="btnAction" class="btn btn-primary" 
                 title="Click to delete this person" /> 
           <input type="hidden" name="person_to_delete" 
                 value="<?php echo $student_info['personId']; ?>" />
         </form>
       </td>
+      <?php endif; ?>   
   </tr>
 <?php endforeach; ?>
 </table>

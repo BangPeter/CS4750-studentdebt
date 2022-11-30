@@ -82,12 +82,14 @@ body {
     Student's name:
     <input type="text" class="form-control" name="personName" required 
           value="<?php if ($person_to_update!=null) echo $person_to_update['personName'] ?>"
+          <?php if (htmlspecialchars($_SESSION["role"])=="student") echo 'readonly'?>
     />            
   </div>  
   <div class="row mb-3 mx-3">
     Loan Amount:
     <input type="text" class="form-control" name="loan_amount" required 
     value="<?php if ($person_to_update!=null) echo $person_to_update['loan_amount'] ?>"
+    <?php if (htmlspecialchars($_SESSION["role"])=="student") echo 'readonly'?>
     />            
   </div> 
   <input type="hidden" name="personId"
@@ -96,11 +98,14 @@ body {
 
   <!-- Every other relevant field in the ER diagram goes here!!!!!!! -->
 
-  
+  <?php if (htmlspecialchars($_SESSION["role"])=="teacher"):?>
   <div>
     <input type="submit" value="Confirm update" name="btnAction" class="btn btn-primary" 
            title="Update a student's debt." />                     
   </div>  
+  <?php else: ?>
+    <a href="simpleform.php">Back</a>
+  <?php endif;?>
 </form>
 </div>   
 

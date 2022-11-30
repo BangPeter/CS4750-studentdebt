@@ -91,11 +91,12 @@ body {
     value="<?php if ($person_to_update!=null) echo $person_to_update['personId'] ?>"
   />
   <!-- <div class="row mb-3 mx-3"> -->
+  <?php if (htmlspecialchars($_SESSION["role"])=="teacher"):?>
   <div>
     <input type="submit" value="Add" name="btnAction" class="btn btn-dark" 
            title="Add a student to list of students with debt table." />               
   </div>  
-
+    <?php endif; ?>
 </form>   
 
 </div>    
