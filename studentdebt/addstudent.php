@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 {
   if (!empty($_POST['btnAction']) && $_POST['btnAction'] =='Add') 
   {
-      addPerson($_POST['personName'], $_POST['loan_amount']);
+      addPerson($_POST['name'], $_POST['loan_amount']);
       header("location: simpleform.php");
   }
   else if (!empty($_POST['btnAction']) && $_POST['btnAction'] =='Update')
@@ -77,8 +77,8 @@ body {
 <form name="mainForm" action="simpleform.php" method="post">   
   <div class="row mb-3 mx-3">
     Student's name:
-    <input type="text" class="form-control" name="personName" required 
-          value="<?php if ($person_to_update!=null) echo $person_to_update['personName'] ?>"
+    <input type="text" class="form-control" name="name" required 
+          value="<?php if ($person_to_update!=null) echo $person_to_update['name'] ?>"
     />            
   </div>  
   <div class="row mb-3 mx-3">

@@ -2,12 +2,12 @@
 <?php
 
 
-function getPersonByName($personName)
+function getPersonByName($name)
 {
     global $db;
-    $query = "SELECT * FROM person WHERE personName like '%$personName%'";
+    $query = "SELECT * FROM person WHERE name like '%$name%'";
     $statement = $db->prepare($query);
-    $statement->bindValue(":personName", $personName);
+    $statement->bindValue(":name", $name);
     $statement->execute();
     $result = $statement->fetchAll();
     $statement->closeCursor();
@@ -26,13 +26,13 @@ function getPersonById($personId)
     return $result;
 }
 
-function addPerson($personName, $loan_amount)
+function addPerson($name, $loan_amount)
 {
     global $db;
-    $query = "INSERT INTO person (personName, loan_amount) VALUES (:personName, :loan_amount)";
+    $query = "INSERT INTO person (name, loan_amount) VALUES (:name, :loan_amount)";
     $statement = $db->prepare($query);
     $statement->bindValue(":loan_amount", $loan_amount);
-    $statement->bindValue(":personName", $personName);
+    $statement->bindValue(":name", $name);
     $statement->execute();
     $statement->closeCursor();
 }
@@ -48,16 +48,16 @@ function getAllPersons()
     return $result;
 }
 
-function updatePerson($personId, $personName, $loan_amount)
+function updatePerson($personId, $name, $loan_amount)
 {   
     // get instance of PDO
     // prepare statement
     // 1) prepare
     // 2) bindValue, execute
     global $db;
-    $query = "UPDATE person SET personName=:personName, loan_amount=:loan_amount WHERE personId=:personId";
+    $query = "UPDATE person SET name=:name, loan_amount=:loan_amount WHERE personId=:personId";
     $statement = $db->prepare($query);
-    $statement->bindValue(":personName", $personName);
+    $statement->bindValue(":name", $name);
     $statement->bindValue(":loan_amount", $loan_amount);
     $statement->bindValue(":personId", $personId);
     $statement->execute();
@@ -71,9 +71,9 @@ function updateDisability($disId, $date)
     // 1) prepare
     // 2) bindValue, execute
     global $db;
-    $query = "UPDATE Disability SET disId=:personName, loan_amount=:loan_amount WHERE personId=:personId";
+    $query = "UPDATE Disability SET disId=:name, loan_amount=:loan_amount WHERE personId=:personId";
     $statement = $db->prepare($query);
-    $statement->bindValue(":personName", $personName);
+    $statement->bindValue(":name", $name);
     $statement->bindValue(":loan_amount", $loan_amount);
     $statement->bindValue(":personId", $personId);
     $statement->execute();

@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 {
   if (!empty($_POST['btnAction']) && $_POST['btnAction'] =='Add') 
   {
-      addPerson($_POST['personName'], $_POST['loan_amount']);
+      addPerson($_POST['name'], $_POST['loan_amount']);
       $list_of_persons = getAllPersons();
   }
   else if (!empty($_POST['btnAction']) && $_POST['btnAction'] =='Update')
@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 
   if(!empty($_POST['btnAction']) && $_POST['btnAction'] == 'Confirm update')
   {
-    updatePerson($_POST['personId'], $_POST['personName'], $_POST['loan_amount']);
+    updatePerson($_POST['personId'], $_POST['name'], $_POST['loan_amount']);
     $list_of_persons = getAllPersons();
   }
   if(!empty($_POST['btnAction']) && $_POST['btnAction'] == 'search')
@@ -97,8 +97,8 @@ body {
 <form name="mainForm" action="simpleform.php" method="post" onsubmit="return confirm('Are you sure you want to submit?');">   
   <div class="row mb-3 mx-3">
     Student's name:
-    <input type="text" class="form-control" name="personName" required 
-          value="<?php //if ($person_to_update!=null) echo $person_to_update['personName'] ?>"
+    <input type="text" class="form-control" name="name" required 
+          value="<?php //if ($person_to_update!=null) echo $person_to_update['name'] ?>"
     />            
   </div>  
   <div class="row mb-3 mx-3">
@@ -148,7 +148,7 @@ body {
 <?php foreach ($list_of_persons as $student_info): ?>
   <tr>
      <td><?php echo $student_info['personId']; ?></td>
-     <td><?php echo $student_info['personName']; ?></td>
+     <td><?php echo $student_info['name']; ?></td>
      <td><?php echo $student_info['loan_amount']; ?></td>                   
      <td>
         <form action="results.php" method="post">
